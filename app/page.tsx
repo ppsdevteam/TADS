@@ -615,9 +615,13 @@ type GovernorateFeature = Feature<Polygon, GovernorateProperties>;
 type CoverageConfig = {
   count: number;
   seed: number;
-  anchor: Position;
+  anchor: [number, number];
   spread: [number, number];
 };
+
+function asGeoPoint(position: Position): [number, number] {
+  return [Number(position[0]), Number(position[1])];
+}
 
 const sourceJordanGeo = jordanAdm1 as FeatureCollection<
   Polygon,
@@ -769,7 +773,7 @@ function createGovernoratePoints(
   const centroid = geoCentroid(feature);
   const anchor = geoContains(feature, config.anchor)
     ? config.anchor
-    : centroid;
+    : asGeoPoint(centroid);
   const spread = config.spread;
   const points: Position[] = [];
 
@@ -784,7 +788,7 @@ function createGovernoratePoints(
       anchor[1] + Math.sin(angle) * spread[1] * radius,
     ];
 
-    if (geoContains(feature, candidate)) {
+    if (geoContains(feature, asGeoPoint(candidate))) {
       points.push(candidate);
     }
 
@@ -797,7 +801,7 @@ function createGovernoratePoints(
       minLatitude + random() * (maxLatitude - minLatitude),
     ];
 
-    if (geoContains(feature, candidate)) {
+    if (geoContains(feature, asGeoPoint(candidate))) {
       points.push(candidate);
     }
 
@@ -825,7 +829,7 @@ const projectedCoveragePoints = jordanGovernorates.features.flatMap(
       .map((coordinates, index) => ({
         id: `${feature.properties.shapeISO}-${index}`,
         name: feature.properties.shapeName,
-        point: jordanProjection(coordinates),
+        point: jordanProjection(asGeoPoint(coordinates)),
       }))
       .filter(
         (

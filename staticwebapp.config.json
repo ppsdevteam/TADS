@@ -1,0 +1,12 @@
+{
+  "trailingSlash": "auto",
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/_next/*", "/*.{css,js,jpg,jpeg,png,gif,svg,webp,ico,woff,woff2,json}"]
+  },
+  "mimeTypes": {
+    ".json": "application/json",
+    ".webp": "image/webp",
+    ".woff2": "font/woff2"
+  }
+}

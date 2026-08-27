@@ -1,0 +1,10 @@
+TADS Corporate Website
+Final package version: 11
+Source revision: 2090d9300c61dce70fb9f054ae637296f654f927
+Package date: 2026-08-26
+
+Includes:
+- Complete source code
+- Final images and logos
+- Production build in dist/
+- Arabic deployment guide
